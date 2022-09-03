@@ -72,10 +72,10 @@ class AbstractRepo implements AbstractRepoInterface
                 }
             }
             $this->model = $this->model->orderBy($input["field"], $input["sort"]);
-            return $input["paginate"] != "false" ? $this->model->paginate($input["limit"]) : $this->model->get();
+            return $input["paginate"] != "false" ? $this->model->paginate($input["limit"]) : $this->model->cache(now()->addDay())->get();
         }
         $this->model = $this->model->orderBy($input["field"], $input["sort"]);
-        return $input["paginate"] != "false"? $this->model->paginate($input["limit"]) : $this->model->get();
+        return $input["paginate"] != "false"? $this->model->paginate($input["limit"]) : $this->model->cache(now()->addDay())->get();
     }
 
     public function bulkDelete(array $ids)
