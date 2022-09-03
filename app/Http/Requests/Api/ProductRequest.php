@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 
-class TagRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,7 @@ class TagRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|string|min:2|unique:tags,name,NULL,id,deleted_at,NULL',
+                    'name' => 'required|string|min:2|unique:categories,name,NULL,id,deleted_at,NULL',
 
 
                 ];

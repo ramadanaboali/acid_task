@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Ads;
+namespace App\Http\Resources\Product;
 
-use App\Http\Resources\Advertiser\AdvertiserResource;
-use App\Http\Resources\Category\CategoryResource;
-use App\Http\Resources\Tag\TagResource;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdsResource extends JsonResource
+class ProductResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,13 +17,7 @@ class AdsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'type' => $this->type,
-            'start_date' => $this->start_date,
-            'tags' => TagResource::collection(Tag::whereIn("id",json_decode($this->tags))->get()),
-            'category' => new CategoryResource($this->category),
-            'advertiser' => new AdvertiserResource($this->advertiser),
+            'name' => $this->name,
             'create_dates' => [
                 'created_at_human' => $this->created_at->diffForHumans(),
                 'created_at' => $this->created_at

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\Advertiser;
+namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Repositories\Eloquent\Advertiser\AdvertiserRepo;
+use App\Http\Repositories\Eloquent\Product\ProductRepo;
 use App\Http\Requests\BulkDeleteRequest;
-use App\Http\Requests\Api\AdvertiserRequest;
+use App\Http\Requests\Api\ProductRequest;
 use App\Http\Requests\PaginateRequest;
-use App\Http\Resources\Advertiser\AdvertiserResource;
+use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\SearchResource;
-use App\Models\Advertiser;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-class AdvertiserController extends Controller
+class ProductController extends Controller
 {
     protected $repo;
-    public function __construct(AdvertiserRepo $repo)
+    public function __construct(ProductRepo $repo)
     {
         $this->repo = $repo;
     }
@@ -24,7 +24,7 @@ class AdvertiserController extends Controller
     public function index(PaginateRequest $request)
     {
         $input = $this->repo->inputs($request->all());
-        $model = new Advertiser();
+        $model = new Product();
         $columns = Schema::getColumnListing($model->getTable());
 
         if (count($input["columns"]) < 1 || (count($input["columns"]) != count($input["column_values"])) || (count($input["columns"]) != count($input["operand"]))) {
@@ -36,7 +36,7 @@ class AdvertiserController extends Controller
         $data = $this->repo->Paginate($input, $wheres);
 
         return responseSuccess([
-            'data' => $input["resource"] == "all" ? AdvertiserResource::collection($data) : SearchResource::collection($data),
+            'data' => $input["resource"] == "all" ? ProductResource::collection($data) : SearchResource::collection($data),
             'meta' => [
                 'total' => $data->count(),
                 'currentPage' => $input["offset"],
@@ -45,49 +45,47 @@ class AdvertiserController extends Controller
         ], 'data returned successfully');
     }
 
-    public function get($advertiser)
+    public function get($Product)
     {
-        $data = $this->repo->findOrFail($advertiser);
+        $data = $this->repo->findOrFail($Product);
 
         return responseSuccess([
-            'data' => new AdvertiserResource($data),
+            'data' => new ProductResource($data),
         ], 'data returned successfully');
     }
 
 
 
-    public function store(AdvertiserRequest $request)
+    public function store(ProductRequest $request)
     {
         $input = [
-            'name' => $request->name,
-            'email' => $request->email
+            'name' => $request->name
             ];
 
          $data = $this->repo->create($input);
 
 
         if ($data) {
-            return responseSuccess(new AdvertiserResource($data), 'data saved successfully');
+            return responseSuccess(new ProductResource($data), 'data saved successfully');
         } else {
             return responseFail('something went wrong');
         }
 
     }
 
-    public function update($advertiser, AdvertiserRequest $request)
+    public function update($Product, ProductRequest $request)
     {
-        $Advertiser = $this->repo->findOrFail($advertiser);
+        $Product = $this->repo->findOrFail($Product);
         $input = [
-            'name' => $request->name ??  $Advertiser->name,
-            'email' => $request->email ??  $Advertiser->email,
+            'name' => $request->name ??  $Product->name,
 
         ];
 
-            $data = $this->repo->update($input, $Advertiser);
+            $data = $this->repo->update($input, $Product);
 
           if ($data) {
 
-            return responseSuccess(new AdvertiserResource($Advertiser->refresh()), 'data Updated successfully');
+            return responseSuccess(new ProductResource($Product->refresh()), 'data Updated successfully');
           } else {
             return responseFail('something went wrong');
           }

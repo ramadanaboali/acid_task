@@ -20,41 +20,6 @@ use stdClass;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-    public function dashboard(){
-         return view('home');
-    }
-
-    public function select($lang)
-    {
-        if (!in_array($lang, ['en', 'ar'])) {
-            abort(400);
-        }
-        FacadesSession::put('lang', $lang);
-        App::setLocale(FacadesSession::get('lang', 'en'));
-        return Redirect::back();
-    }
-    public function dark($code)
-    {
-        if (!in_array($code, ['on', 'off'])) {
-            abort(400);
-        }
-        if($code=='on'){
-            FacadesSession::put('darkMode', $code);
-        }else{
-            FacadesSession::forget('darkMode');
-        }
-
-        return Redirect::back();
-    }
-    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable

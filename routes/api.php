@@ -7,22 +7,21 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['api','lang'],'namespace' => 'Api'], function () {
 
 
-    Route::group(['namespace' => 'Category'], function () {
-        // Category////////
-        Route::group([ 'prefix' => 'categories'], function () {
+
+        Route::group(['namespace' => 'Product', 'prefix' => 'products'], function () {
             // index
-            Route::get('/', 'CategoryController@index');
+            Route::get('/', 'ProductController@index');
             // create
-            Route::post('/', 'CategoryController@store');
+            Route::post('/', 'ProductController@store');
             // get
-            Route::get('{Category}', 'CategoryController@get');
+            Route::get('{Product}', 'ProductController@get');
             // update
-            Route::put('{Category}', 'CategoryController@update');
+            Route::put('{Product}', 'ProductController@update');
             // delete
-            Route::delete('bulkDelete', 'CategoryController@bulkDelete');
-            Route::post('bulkRestore', 'CategoryController@bulkRestore');
+            Route::delete('bulkDelete', 'ProductController@bulkDelete');
+            Route::post('bulkRestore', 'ProductController@bulkRestore');
         });
-    });
+
 });
 
 
