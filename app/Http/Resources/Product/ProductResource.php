@@ -17,7 +17,10 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'product_name' => $this->product_name,
+            'part_number' => $this->part_number,
+            'article_group_id' => $this->article_group_id,
+            'price' => $this->price,
             'create_dates' => [
                 'created_at_human' => $this->created_at->diffForHumans(),
                 'created_at' => $this->created_at
