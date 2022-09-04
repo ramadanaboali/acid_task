@@ -35,7 +35,7 @@ class ProductRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name' => 'required|string|min:2|unique:categories,name,NULL,id,deleted_at,NULL',
+                    'file' => 'required|mimes:xlsx,xls,csv',
 
 
                 ];
@@ -44,7 +44,7 @@ class ProductRequest extends FormRequest
             case 'PUT':
             {
                 return [
-                    'name' => 'required|string|min:2',
+                    'product_name' => 'required|string|min:2',
 
                 ];
             }

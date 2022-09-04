@@ -30,6 +30,18 @@ you can filter with any column you need or order or
 limit or paginate i develop this algorithm to serve general use of any module
 
 
+just add it at query params body at postman request
+
+her is an example to filter with id bigger than 7
+
+and limit to 2 with offset 1 
+
+and order by id asc
+
+and return all resource not just id with name 
+
+and select paginate wihtout soft deleted items
+
 
 {
 

@@ -10,9 +10,12 @@ use App\Http\Requests\Api\ProductRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\SearchResource;
+use App\Imports\ProductImport;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ProductController extends Controller
 {
     protected $repo;
@@ -58,18 +61,9 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $input = [
-            'name' => $request->name
-            ];
-
-         $data = $this->repo->create($input);
-
-
-        if ($data) {
-            return responseSuccess(new ProductResource($data), 'data saved successfully');
-        } else {
-            return responseFail('something went wrong');
-        }
+        $object = new ProductImport();
+        Excel::import($object, request()->file('file'));
+        return responseSuccess([], 'data saved successfully');
 
     }
 
